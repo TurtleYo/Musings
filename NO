@@ -1,0 +1,47 @@
+List<string> Reportings = new List<string>();         
+
+     public void Reportings(CommandArgs args)
+         {
+             Reportings.Add(args.Player.Name + "," + args.Player.TileX +  
+"," + args.Player.TileY);
+             args.Player.SendMessage("Thank you for your report.");
+             foreach (TSPlayer ts in TShock.Players)
+             {
+                 if (ts != null)
+                 {
+                     if (ts.Group.HasPermission("ban"))
+                     {
+                         ts.SendInfoMessage(args.Player.Name + " has reported: " + args.Player.TileX + ", " +  
+args.Player.TileY:);
+                     }
+                 }
+             }
+         }
+         public void ReportsGo(CommandArgs args)
+         {
+         }
+         public voide ReportsResolve(CommandArgs args)
+         {
+             
+             
+             if (Reportings.Count >= 1)
+             {
+                 foreach (string report in Reportings)
+                 {
+                     string delete = report;
+                     string[] info = report.Split(',');
+                     string name = info[0];
+                     int x = Convert.ToInt32(info[1]);
+                     int y = Convert.ToInt32(info[2]);
+                     args.Player.Teleport(x, y);
+                     args.Player.SendMessage(x + ", " + y + ",  
+reported by: " + name, Color.Cyan);
+                     break;
+                 }
+             }
+             else
+             {
+                 args.Player.SendInfoMessage("All reports have been  
+resolved.");
+             }
+         }
